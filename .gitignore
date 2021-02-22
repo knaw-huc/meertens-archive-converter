@@ -127,3 +127,17 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+.idea
+.idea/*
+
+db
+db/*
+
+archief.zip
+
+archief
+archief/*
+
+archief-precollection
+archief-precollection/*
