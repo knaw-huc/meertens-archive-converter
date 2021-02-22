@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  web:
+#    image: python:2.7
+    build: ./web
+    container_name: web
+    ports:
+      - 80:80
+    depends_on:
+      - db
+    command: tail -F /dev/null
+    volumes:
+      - ./archief:/data2/DigitaleOnderzoekscollecties
+      - ./archief-precollection:/data2/DigitaleOnderzoekscollecties-precollection
+      - ./script:/var/script
+  db:
+    image: mariadb:latest
+    container_name: db
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=oai-pmh
+      - MYSQL_USER=demo
+      - MYSQL_PASSWORD=demo
+  phpmyadmin:
+    image: 'phpmyadmin/phpmyadmin'
+    container_name: phpmyadmin
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+    environment:
+      - MYSQL_USERNAME=root
+      - MYSQL_ROOT_PASSWORD=root
+      - PMA_HOST=db
